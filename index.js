@@ -5,7 +5,6 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const actions = require("./data/helpers/actionModel.js");
 const project = require("./data/helpers/projectModel.js");
-const cors = require("cors");
 
 server.use(express.json());
 server.use(helmet());
