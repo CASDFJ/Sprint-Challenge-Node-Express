@@ -97,7 +97,7 @@ server.put("/action/:id", (req, res) => {
 //--PUT ACTION--//
 
 //--DELETE ACTION--//
-server.delete("action/:id", (req, res) => {
+server.delete("/action/:id", (req, res) => {
   actions
     .remove(req.params.id)
     .then((response) => {
