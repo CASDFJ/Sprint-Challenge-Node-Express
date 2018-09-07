@@ -1,18 +1,22 @@
 const express = require("express");
 const server = express();
-const action = require("./data/helpers/actionModel.js");
-const mappers = require("./data/helpers/mappers.js");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const actions = require("./data/helpers/actionModel.js");
 const project = require("./data/helpers/projectModel.js");
 const cors = require("cors");
 
 server.use(express.json());
+server.use(helmet());
+server.use(morgan("dev"));
 server.use(cors());
 
-//----Endpoints----//
+//----Endpoints For Actions----//
 
 //--GET ACTION--//
 server.get("/action", (req, res) => {
-  action
+  actions
     .get()
     .then((actions) => {
       if (actions) {
@@ -29,9 +33,9 @@ server.get("/action", (req, res) => {
 //--GET ACTION--//
 
 //--GET with ID ACTION--//
-server.get("/actions/:id", (req, res) => {
+server.get("/action/:id", (req, res) => {
   const id = req.params.id;
-  action
+  actions
     .get(id)
     .then((actions) => {
       if (actions) {
@@ -48,12 +52,12 @@ server.get("/actions/:id", (req, res) => {
 //--GET with ID ACTION--//
 
 //--POST ACTION--//
-server.post("/actions/:id", async (req, res) => {
-  const actionBody = req.body;
-  action
-    .insert(actionBody)
+server.post("/action/:id", async (req, res) => {
+  const action = req.body;
+  actions
+    .insert(action)
     .then((response) => {
-      if (actionBody.description && actionBody.notes) {
+      if (action.description && action.notes) {
         res.status(201).json({ message: "Post Was Created!" });
       } else {
         res
@@ -74,7 +78,7 @@ server.put("/action/:id", (req, res) => {
   const id = req.params.id;
   const notes = req.body.notes;
   if (notes) {
-    action
+    actions
       .update(id, actionChange)
       .then((change) => {
         if (change) {
@@ -95,7 +99,7 @@ server.put("/action/:id", (req, res) => {
 
 //--DELETE ACTION--//
 server.delete("action/:id", (req, res) => {
-  action
+  actions
     .remove(req.params.id)
     .then((response) => {
       if (response) {
@@ -110,3 +114,32 @@ server.delete("action/:id", (req, res) => {
     });
 });
 //--DELETE ACTION--//
+//----Endpoints For Actions----//
+
+
+//----Endpoints For Project----//
+//--GET PROJECT--//
+
+//--GET PROJECT--//
+
+//--GETPROJECTACTIONS PROJECT--//
+
+//--GETPROJECTACTIONS PROJECT--//
+
+//--POST PROJECT--//
+
+//--POST PROJECT--//
+
+//--PUT PROJECT--//
+
+//--PUT PROJECT--//
+
+//--DELETE PROJECT--//
+
+//--DELETE PROJECT--//
+//----Endpoints For Project----//
+
+
+//--START SERVER--//
+server.listen(5000, () => console.log("\n=== API on port 5k ===\n"));
+//--START SERVER--//
