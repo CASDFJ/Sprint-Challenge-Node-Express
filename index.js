@@ -51,13 +51,12 @@ server.get("/action/:id", (req, res) => {
 //--GET with ID ACTION--//
 
 //--POST ACTION--//
-server.post("/action/:id", async (req, res) => {
+server.post("/action", (req, res) => {
   const action = req.body;
-  actions
-    .insert(action)
-    .then((response) => {
-      if (action.description && action.notes) {
-        res.status(201).json({ message: "Post Was Created!" });
+  actions.insert(action)
+    .then((action) => {
+      if (action) {
+        res.status(201).json({ action });
       } else {
         res
           .status(404)
@@ -65,6 +64,7 @@ server.post("/action/:id", async (req, res) => {
       }
     })
     .catch((err) => {
+      console.log("Action: ", action);
       console.log("Error: ", err);
       res.status(500).json({ Error: "Action Body could not receive post" });
     });
@@ -154,13 +154,13 @@ server.get("/project/:id", (req, res) => {
 //--GETPROJECTACTIONS PROJECT--//
 
 //--POST PROJECT--//
-server.post("/project/:id", async (req, res) => {
+server.post("/project", (req, res) => {
   const project_post = req.body;
   project
     .insert(project_post)
-    .then((response) => {
-      if (project_post.name) {
-        res.status(201).json({ message: "Post Was Created!" });
+    .then(project_post => {
+      if (project_post) {
+        res.status(201).json({ project_post });
       } else {
         res
           .status(404)
