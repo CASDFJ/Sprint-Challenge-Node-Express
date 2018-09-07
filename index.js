@@ -115,18 +115,63 @@ server.delete("action/:id", (req, res) => {
 //--DELETE ACTION--//
 //----Endpoints For Actions----//
 
-
 //----Endpoints For Project----//
 //--GET PROJECT--//
-
+server.get("/project", (req, res) => {
+  project
+    .get()
+    .then((actions) => {
+      if (actions) {
+        res.status(200).json(actions);
+      } else {
+        res.status(404).json({ message: "No actions found" });
+      }
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      res.status(500).json({ error: "Actions cannot be found" });
+    });
+});
 //--GET PROJECT--//
 
 //--GETPROJECTACTIONS PROJECT--//
-
+server.get("/project/:id", (req, res) => {
+  const id = req.params.id;
+  project
+    .getProjectActions(id)
+    .then((actions) => {
+      if (actions) {
+        res.status(200).json(actions);
+      } else {
+        res.status(404).json({ message: "No actions found with ID" });
+      }
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      res.status(500).json({ error: "Actions cannot be retrieved" });
+    });
+});
 //--GETPROJECTACTIONS PROJECT--//
 
 //--POST PROJECT--//
-
+server.post("/project/:id", async (req, res) => {
+  const project_post = req.body;
+  project
+    .insert(project_post)
+    .then((response) => {
+      if (project_post.name) {
+        res.status(201).json({ message: "Post Was Created!" });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Action needs description and note(s)" });
+      }
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      res.status(500).json({ Error: "Action Body could not receive post" });
+    });
+});
 //--POST PROJECT--//
 
 //--PUT PROJECT--//
@@ -137,7 +182,6 @@ server.delete("action/:id", (req, res) => {
 
 //--DELETE PROJECT--//
 //----Endpoints For Project----//
-
 
 //--START SERVER--//
 server.listen(5000, () => console.log("\n=== API on port 5k ===\n"));
