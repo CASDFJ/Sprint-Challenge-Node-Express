@@ -140,7 +140,7 @@ server.get("/project", (req, res) => {
 server.get("/project/:id", (req, res) => {
   const id = req.params.id;
   project
-    .getProjectActions(id)
+    .get(id) //getProjectActions//
     .then((actions) => {
       if (actions) {
         res.status(200).json(actions);
