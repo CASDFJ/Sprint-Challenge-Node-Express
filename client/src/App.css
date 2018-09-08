@@ -26,3 +26,17 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.text {
+  border: 1px solid red;
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.name {
+  color: black;
+}
+
+.description {
+  color: blue;
+}

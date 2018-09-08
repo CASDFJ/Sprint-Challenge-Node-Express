@@ -27,15 +27,19 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div>
-          {this.state.projects.map((project) => {
-            {
-              project.name;
-            }
-            {
-              project.description;
-            }
-          })}
+        <div className="text">
+          <table>
+            <tbody>
+              <tr>
+                {this.state.projects.map((project) => (
+                  <td key={project.id} className="text">
+                    <div className="name">{project.name}</div>
+                    <div className="description">{project.description}</div>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     );
