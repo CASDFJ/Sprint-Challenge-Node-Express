@@ -12,7 +12,6 @@ server.use(morgan("dev"));
 server.use(cors());
 
 //----Endpoints For Actions----//
-
 //--GET ACTION--//
 server.get("/action", (req, res) => {
   actions
@@ -53,7 +52,8 @@ server.get("/action/:id", (req, res) => {
 //--POST ACTION--//
 server.post("/action", (req, res) => {
   const action = req.body;
-  actions.insert(action)
+  actions
+    .insert(action)
     .then((action) => {
       if (action) {
         res.status(201).json({ action });
@@ -158,7 +158,7 @@ server.post("/project", (req, res) => {
   const project_post = req.body;
   project
     .insert(project_post)
-    .then(project_post => {
+    .then((project_post) => {
       if (project_post) {
         res.status(201).json({ project_post });
       } else {
@@ -175,11 +175,46 @@ server.post("/project", (req, res) => {
 //--POST PROJECT--//
 
 //--PUT PROJECT--//
-
+server.put("/project/:id", (req, res) => {
+  const projectChange = req.body;
+  const id = req.params.id;
+  const name = req.body.name;
+  if (name) {
+    project
+      .update(id, projectChange)
+      .then((change) => {
+        if (change) {
+          res.status(200).json(change);
+        } else {
+          res.status(404).json({ message: "Update could not happen" });
+        }
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+        res.status(500).json({ message: "Error with updating" });
+      });
+  } else {
+    res.status(404).json({ message: "Could not find names" });
+  }
+});
 //--PUT PROJECT--//
 
 //--DELETE PROJECT--//
-
+server.delete("/project/:id", (req, res) => {
+  project
+    .remove(req.params.id)
+    .then((response) => {
+      if (response) {
+        res.status(204).json({ message: "Post Deleted" });
+      } else {
+        res.status(404).json({ message: "Post with ID cannot be found" });
+      }
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      res.status(500).json({ message: "Post could not be removed" });
+    });
+});
 //--DELETE PROJECT--//
 //----Endpoints For Project----//
 
