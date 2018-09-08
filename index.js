@@ -115,6 +115,8 @@ server.delete("/action/:id", (req, res) => {
 //--DELETE ACTION--//
 //----Endpoints For Actions----//
 
+//--------------------------------------------------------------------------------------------//
+
 //----Endpoints For Project----//
 //--GET PROJECT--//
 server.get("/project", (req, res) => {
